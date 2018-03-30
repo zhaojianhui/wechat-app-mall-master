@@ -1,0 +1,95 @@
+<!--index.wxml-->
+<!--1px = 750/320 = 2.34rpx;-->
+<view class="container">
+   <view class="swiper-container">
+        <swiper class="ad" 
+                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+            <block wx:for="{{ad}}" wx:key="id">
+                <swiper-item>
+                    <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="462.5rpx"/>
+                </swiper-item>
+            </block>
+        </swiper>
+        <view class="dots">  
+            <block wx:for="{{ad}}" wx:key="unique">  
+                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>  
+            </block>  
+        </view>  
+   </view>
+   
+  
+<view class="icon">
+<scroll-view scroll-x="true">
+     <view class="icon_box"  wx:for-items="{{categories}}" wx:key="id" >
+          <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
+           
+           <view class="icon_title">{{item.title}}<view class='iconposition'></view></view>
+           </view></view>
+            </scroll-view>
+           </view>
+      
+ <view class="type-container">
+        <scroll-view class="type-navbar" scroll-x="true">
+            <view class="type-box" wx:for-items="{{categories}}" wx:key="id">
+                <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
+                <view class='type-img-box'>
+                <image src='{{item.icon}}'></image>
+                </view>
+                    <text>{{item.name}}</text>
+                    
+                </view>
+            </view>
+        </scroll-view>
+        <image class='type-all-img' src='../../images/全部.png'></image>
+    </view>
+
+
+      
+      <view class="notice_iteml"><text>限时抢购：</text><text style="color: #f60  ">{{closenotice}}{{clock}}</text><text class='more'>更多  ></text></view>
+
+   <view class="goods-container">
+        <view class="goods-box goods-box-xq" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+           <view class="img-box">
+              <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
+           </view>
+           <view class="goods-title">{{item.name}}</view>
+           <view style='display:flex;'>
+            <view class="goods-price">¥ {{item.minPrice}}</view>
+            <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+           </view>           
+        </view>
+    </view>
+    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
+
+      <view class="notice_iteml"><text>优惠券</text><text class='more' bindtap='toDetailsTapMore'>{{more_notice}} </text></view>
+     
+      
+    
+    <view class="coupons" hidden="{{hasNoCoupons}}">
+        <scroll-view class="coupons-scroll" scroll-x="true">
+            <view class="coupons-item" wx:for-items="{{coupons}}" wx:for-index="idx" wx:key="id"  bindtap="gitCoupon" data-id="{{item.id}}">
+               <view style="font-size: 35rpx"> ￥ {{item.moneyMax}}元 </view>
+               <view> {{item.name}} </view>
+               <view> 满 {{item.moneyHreshold}} 元使用 </view>
+               <view wx:if="{{item.dateEndType == 0}}"> {{item.dateEnd}} 前有效 </view>
+               <view wx:if="{{item.dateEndType == 1}}"> 领取 {{item.dateEndDays}} 天内有效 </view>
+            </view>
+        </scroll-view>
+    </view>
+
+     <view class="notice_iteml"><text>精品推荐</text><text class='more'>更多 >  <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view> </text></view>
+
+    <view class="goods-container">
+        <view class="goods-box goods-box-jt" wx:for-items="{{goods1}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+           <view class="img-box">
+              <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
+           </view>
+           <view class="goods-title">{{item.name}}</view>
+           <view style='display:flex;'>
+            <view class="goods-price">¥ {{item.minPrice}}</view>
+            <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+           </view>           
+        </view>
+    </view>
+    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
+</view>
